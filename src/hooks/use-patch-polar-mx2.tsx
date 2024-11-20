@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { fetchPatchPolarMX2 } from "../services/patch-polar-mx2";
+import { fetchData } from "../services/utils";
 import { toast } from "react-toastify";
 
 export const usePatchPolarMX2 = () => {
   const patchPolarMX2Mutation = useMutation({
-    mutationFn: fetchPatchPolarMX2,
+    mutationFn: fetchData,
     onSuccess: (data) => {
       if (typeof data !== "string") {
         toast.success("SUCCESS", {
