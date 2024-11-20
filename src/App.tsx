@@ -1,19 +1,17 @@
-import { Sensor } from "./components/sensors/heart-sensors/sensor";
-import { SamsungX1S } from "./components/sensors/heart-sensors/samsung-x1s";
-import { SamsungBPA } from "./components/sensors/blood-sensors/samsung-bpa";
+import { Sensor } from "./components/sensors/sensor";
 import { ToastContainer } from "react-toastify";
+import { DEVICES } from "./utils/devices";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import { DEVICE } from "./services/utils";
 
 function App() {
   return (
     <main>
       <ToastContainer />
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <Sensor device={DEVICE.H_POLAR} />
-        {/* <SamsungX1S />
-        <SamsungBPA /> */}
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3">
+        {Object.keys(DEVICES).map((d) => (
+          <Sensor device={DEVICES[d]} key={d} />
+        ))}
       </div>
     </main>
   );
