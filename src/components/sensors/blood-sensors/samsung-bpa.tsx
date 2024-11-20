@@ -1,4 +1,4 @@
-import { useSamsungBPA } from "./hooks/use-samsung-bpa";
+import { useSamsungBPA } from "./hooks/use-measurement";
 import { useSubmitFormSamsungBPA } from "./hooks/use-submit-form-samsung-bpa";
 
 export const SamsungBPA = () => {

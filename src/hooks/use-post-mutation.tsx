@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { fetchData } from "../services/utils";
+import { fetchPostData } from "../services/utils";
 import { toast } from "react-toastify";
 
-export const usePatchPolarMX2 = () => {
-  const patchPolarMX2Mutation = useMutation({
-    mutationFn: fetchData,
+export const usePostMutation = () => {
+  const postMutation = useMutation({
+    mutationFn: fetchPostData,
     onSuccess: (data) => {
       if (typeof data !== "string") {
         toast.success("SUCCESS", {
@@ -33,6 +33,6 @@ export const usePatchPolarMX2 = () => {
   });
 
   return {
-    patchPolarMX2Mutation,
+    postMutation,
   };
 };
