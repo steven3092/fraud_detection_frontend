@@ -1,19 +1,15 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, it, vitest, expect } from "vitest";
+import userEvent from "@testing-library/user-event";
 import { DeviceType } from "../../utils/types";
 import { Sensor } from "./sensor";
 
+const mockStart = vitest.fn();
 vitest.mock("./hooks/use-measurement", () => ({
   useMeasurement: vitest.fn(() => ({
     measure: vitest.fn(),
     isMeasuring: false,
-    start: vitest.fn(),
-  })),
-}));
-
-vitest.mock("./hooks/use-submit-form", () => ({
-  useSubmitForm: vitest.fn(() => ({
-    handleSubmitForm: vitest.fn((e: React.FormEvent) => e.preventDefault()),
+    start: mockStart,
   })),
 }));
 
@@ -29,8 +25,6 @@ vitest.mock("./hooks/use-submit-form", () => ({
     handleSubmitForm: mockHandleSubmitForm,
   })),
 }));
-
-const mockStart = vitest.fn();
 
 const mockDevice: DeviceType = {
   name: "Test Device",
@@ -53,25 +47,17 @@ describe("Sensor Component", () => {
     expect(screen.getByText("Input2")).toBeInTheDocument();
   });
 
-  it("calls start when the 'Start Measurement' button is clicked", () => {
-    vitest.mock("./hooks/use-measurement", () => ({
-      useMeasurement: vitest.fn(() => ({
-        measure: vitest.fn(),
-        isMeasuring: false,
-        start: mockStart,
-      })),
-    }));
-
+  it("calls start when the 'Start Measurement' button is clicked", async () => {
     render(<Sensor device={mockDevice} />);
     const button = screen.getByText("Start Measurement");
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(mockStart).toHaveBeenCalled();
   });
 
-  it("submits the form when 'Send Data' button is clicked", () => {
+  it("submits the form when 'Send Data' button is clicked", async () => {
     render(<Sensor device={mockDevice} />);
     const button = screen.getByText("Send Data");
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(mockHandleSubmitForm).toHaveBeenCalled();
   });
 });

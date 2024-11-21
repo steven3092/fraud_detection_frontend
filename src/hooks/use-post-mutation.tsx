@@ -18,7 +18,9 @@ export const usePostMutation = () => {
     mutationFn: fetchPostData,
     onSuccess: (data) => {
       const isFraud = data.data.fraud === "True";
-      if (isFraud) {
+      if (data.status === "ERROR") {
+        toast.error(data.data, TOAST_OPTIONS);
+      } else if (isFraud) {
         toast.warn(data.fraud_reason, TOAST_OPTIONS);
       } else {
         toast.success(data.status, TOAST_OPTIONS);
