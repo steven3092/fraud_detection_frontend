@@ -1,4 +1,4 @@
-import { DeviceType } from "./devices";
+import { DeviceType } from "../utils/types";
 
 export type FetchType = {
   device: DeviceType;
@@ -7,7 +7,6 @@ export type FetchType = {
 
 export async function fetchPostData(params: FetchType) {
   const { device, body } = params;
-  console.log("body", body);
 
   const options: RequestInit = {
     method: "POST",
@@ -17,5 +16,7 @@ export async function fetchPostData(params: FetchType) {
 
   const response = await fetch(device.url, options);
 
-  return await response.json();
+  const data = await response.json();
+
+  return data;
 }

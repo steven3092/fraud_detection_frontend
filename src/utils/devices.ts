@@ -1,27 +1,9 @@
-import { getBloodMeasurement, getPolarMeasurement, getX1Measurement, MeasurementType } from "./measurements";
-
-export type InputType = {
-  label: string;
-  name: string;
-  unit: string;
-};
-
-export type PayloadType = {
-  name: string;
-  getValue?: (d: DeviceType) => string;
-};
-
-export type DeviceType = {
-  name: string;
-  type: "BLOOD" | "HEART";
-  url: string;
-  model: string;
-  version: string;
-  properties: PayloadType[];
-  payload?: PayloadType[];
-  getMeasurement: () => MeasurementType;
-  inputs: InputType[];
-};
+import { DeviceType } from "./types";
+import {
+  getSamsungBPAMeasurement,
+  getPolarMX2Measurement,
+  getSamsungX1SMeasurement,
+} from "./measurements";
 
 export const DEVICES: Record<string, DeviceType> = {
   POLAR_MX2: {
@@ -37,8 +19,11 @@ export const DEVICES: Record<string, DeviceType> = {
         unit: "per seconds",
       },
     ],
-    getMeasurement: getPolarMeasurement,
-    properties: [{ name: "fw", getValue: (d: DeviceType) => `${d.model}/${d.version}` }, { name: "pulse" }],
+    getMeasurement: getPolarMX2Measurement,
+    properties: [
+      { name: "fw", getValue: (d: DeviceType) => `${d.model}/${d.version}` },
+      { name: "pulse" },
+    ],
   },
 
   SAMSUNG_X1S: {
@@ -54,7 +39,7 @@ export const DEVICES: Record<string, DeviceType> = {
         unit: "per minutes",
       },
     ],
-    getMeasurement: getX1Measurement,
+    getMeasurement: getSamsungX1SMeasurement,
     properties: [
       { name: "model", getValue: (d: DeviceType) => d.model },
       { name: "version", getValue: (d: DeviceType) => d.version },
@@ -69,14 +54,14 @@ export const DEVICES: Record<string, DeviceType> = {
     model: "BPA",
     version: "1.3",
     inputs: [
-      { name: "bp-sys", unit: "mmHg", label: "Systolic" },
-      { name: "bp-dia", unit: "mmHg", label: "Diastolic" },
+      { name: "bp_sys", unit: "mmHg", label: "Systolic" },
+      { name: "bp_dia", unit: "mmHg", label: "Diastolic" },
     ],
-    getMeasurement: getBloodMeasurement,
+    getMeasurement: getSamsungBPAMeasurement,
     properties: [
       { name: "model", getValue: (d: DeviceType) => d.model },
       { name: "version", getValue: (d: DeviceType) => d.version },
     ],
-    payload: [{ name: "bp-sys" }, { name: "bp-dia" }],
+    payload: [{ name: "bp_sys" }, { name: "bp_dia" }],
   },
 };

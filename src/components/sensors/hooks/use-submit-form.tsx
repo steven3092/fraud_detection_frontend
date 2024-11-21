@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { usePostMutation } from "../../../hooks/use-post-mutation";
-import { DeviceType } from "../../../utils/devices";
-import { FetchType } from "../../../utils/service";
+import { DeviceType } from "../../../utils/types";
+import { FetchType } from "../../../services/post-sensor";
 
 export const useSubmitForm = (device: DeviceType) => {
   const { postMutation } = usePostMutation();
@@ -13,10 +13,19 @@ export const useSubmitForm = (device: DeviceType) => {
 
     const { properties = [], payload = [] } = device;
 
-    const body: Record<string, FormDataEntryValue | any> = {};
+    const body: {
+      [key: string]: FormDataEntryValue | unknown;
+      payload: { [key: string]: FormDataEntryValue | unknown };
+    } = {
+      payload: {},
+    };
 
-    for (const e of [...properties, ...payload]) {
+    for (const e of properties) {
       body[e.name] = e.getValue ? e.getValue(device) : formData.get(e.name);
+    }
+
+    for (const e of payload) {
+      body.payload[e.name] = formData.get(e.name);
     }
 
     const params: FetchType = {

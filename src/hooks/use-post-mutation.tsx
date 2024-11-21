@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { fetchPostData } from "../utils/service";
 import { toast, ToastOptions } from "react-toastify";
+import { fetchPostData } from "../services/post-sensor";
 
 const TOAST_OPTIONS: ToastOptions<unknown> = {
   position: "top-center",
@@ -17,11 +17,12 @@ export const usePostMutation = () => {
   const postMutation = useMutation({
     mutationFn: fetchPostData,
     onSuccess: (data) => {
-      if (!data.fraud) {
-        toast.success("SUCCESS", TOAST_OPTIONS);
-        return;
+      const isFraud = data.data.fraud === "True";
+      if (isFraud) {
+        toast.warn(data.fraud_reason, TOAST_OPTIONS);
+      } else {
+        toast.success(data.status, TOAST_OPTIONS);
       }
-      toast.warn(data, TOAST_OPTIONS);
     },
     onError: () => console.log("Error"),
   });
