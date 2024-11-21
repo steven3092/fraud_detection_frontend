@@ -9,8 +9,8 @@ function App() {
     <main>
       <ToastContainer />
       <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3">
-        {Object.keys(DEVICES).map((d) => (
-          <Sensor device={DEVICES[d]} key={d} />
+        {Object.keys(DEVICES).map((device) => (
+          <Sensor device={DEVICES[device]} key={device} />
         ))}
       </div>
     </main>

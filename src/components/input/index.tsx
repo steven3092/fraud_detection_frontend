@@ -4,7 +4,7 @@ import { InputType } from "../../utils/types";
 export type InputProps = { input: InputType; measure?: MeasurementType };
 
 export const Input = ({ input, measure }: InputProps) => {
-  const value = measure?.[input.name as keyof MeasurementType] || 0;
+  const value = measure?.[input.name as keyof MeasurementType] || "~";
 
   return (
     <div className="mt-6  text-xl text-gray-700 " key={input.name}>
