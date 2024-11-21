@@ -38,7 +38,7 @@ vitest.mock("../../../hooks/use-post-mutation", () => ({
 }));
 
 describe("useSubmitForm", () => {
-  it("should call postMutation with the correct parameters", async () => {
+  it("should call postMutation", async () => {
     const { result } = renderHook(() => useSubmitForm(mockDevice));
 
     const mockFormEvent: Partial<FormEvent<HTMLFormElement>> = {
