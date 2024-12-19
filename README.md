@@ -2,7 +2,7 @@
 
 Is an app you can see different heart beating monitors.
 
-You take a mesure each monitors take mesures in a different way and there payload is different as well.
+You take a mesure, each monitors take mesures in a different way and their payload is different as well.
 
 I built the backend with python Django available [here](https://github.com/steven3092/fraud_detection_backend)
 
