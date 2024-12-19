@@ -4,6 +4,10 @@ Is an app you can see different heart beating monitors.
 
 You take a mesure, each monitors take mesures in a different way and their payload is different as well.
 
+When you click on 'Send data' the app call an api and POST the data to the backend, and the backend checks the value and return if it's a fraud or not.
+
+I display the respense from the backend through a toast.
+
 I built the backend with python Django available [here](https://github.com/steven3092/fraud_detection_backend)
 
 Enjoy !
